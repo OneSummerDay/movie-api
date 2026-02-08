@@ -1,14 +1,14 @@
-const express = require('express');
+import express from 'express';
+
+// Import routes
+import movieRoutes from './routes/movieRoutes.js';
 
 const app = express();
 
+// API routes
+app.use('/movies', movieRoutes);
+
 const PORT = process.env.PORT || 3000;
-
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
-
-
 const server = app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
