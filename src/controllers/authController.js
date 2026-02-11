@@ -1,4 +1,4 @@
-import { status } from 'express/lib/response.js';
+import { generateToken } from '../utils/jenerateToken.js';
 import { prisma } from '../config/db.js';
 import bcrypt from 'bcryptjs';
 
@@ -24,6 +24,8 @@ const register = async (req, res) => {
         }
     });
 
+    const token = generateToken();
+
     res.status(201).json({ 
         status: 'success',
         data: {
@@ -31,7 +33,8 @@ const register = async (req, res) => {
                 id: user.id,
                 name: user.name,
                 email: user.email
-            }
+            },
+            token,
         }
      });
 }
@@ -53,13 +56,16 @@ const login = async (req, res) => {
         return res.status(400).json({ message: 'Invalid mail or password' });
     }
 
+    const token = generateToken(user.id);
+
     res.status(201).json({ 
         status: 'success',
         data: {
             user: {
                 id: user.id,
                 email: user.email
-            }
+            },
+            token,
         }
      });
 }
