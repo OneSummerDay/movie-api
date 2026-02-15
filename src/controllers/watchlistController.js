@@ -36,4 +36,20 @@ const addToWatchList = (req, res) => {
 
 };
 
-export { addToWatchList };
+const removeFromWatchList = (req, res) => {
+    const watchlistItem = prisma.watchlistItem.findUnique({
+        where: { id: req.params.id }
+    });
+
+    if (!watchlistItem) {
+        return res.status(404).json({ message: 'Movie not in watchlist' });
+    }
+
+    prisma.watchlistItem.delete({
+        where: { id: req.params.id }
+    });
+
+    res.json({ message: 'Movie removed from watchlist' });
+}
+
+export { addToWatchList, removeFromWatchList };
