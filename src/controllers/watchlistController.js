@@ -1,7 +1,7 @@
 import { prisma } from "../config/db.js";
 
 const addToWatchList = (req, res) => {
-    const { movieId, status, rating, notes} = req.body;
+    const { movieId, userId, status, rating, notes} = req.body;
 
     const movie = prisma.movie.findUnique({
         where: { id: movieId }
